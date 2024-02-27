@@ -1,0 +1,86 @@
+Alcala de Henares
+Alcobendas
+Alcorcon
+Alicante
+Almeria
+Arona
+Arrecife
+Aviles
+A Coruna
+Badalona
+Barcelona
+Benalmadena
+Benidorm
+Bilbao
+Boadilla del Monte
+Bormujos
+Burgos
+Burjasot
+Cadiz
+Cambrils
+Cartagena
+Castelldefels
+Castellon de la Plana
+Collado-Villalba
+Cordoba
+Cunit
+Donostia
+Dos Hermanas
+Elche
+Figueras
+Fuengirola
+Fuenlabrada
+Getafe
+Gijon
+Girona
+Granada
+Granollers
+Guadalajara
+Ibiza
+Igualada
+Jerez de la Frontera
+Las Palmas
+Las Rozas de Madrid
+La Laguna
+La Llagosta
+Leganes
+Lleida
+Logrono
+Madrid
+Majadahonda
+Malaga
+Manresa
+Marbella
+Mislata
+Mostoles
+Murcia
+Ourense
+Oviedo
+Palma
+Pamplona
+Petrel
+Portugalete
+Ripollet
+Rubi
+Sabadell
+Salamanca
+Salou
+Santander
+Santiago de Compostela
+San Cugat del Valles
+San Feliu de Llobregat
+San Fernando
+San Fernando de Henares
+Sevilla
+Tarragona
+Tarrasa
+Torrejon de Ardoz
+Torrelavega
+Torremolinos
+Valencia
+Valladolid
+Vendrell
+Vigo
+Villanueva y Geltru
+Vitoria-Gasteiz
+Zaragoza

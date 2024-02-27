@@ -3,7 +3,13 @@ from dataclasses import dataclass, asdict, field
 import pandas as pd
 
 SEARCH_FOR = 'cannabis clubs'
-CITIES = 'Barcelona', 'Valencia', 'Sevilla', 'Madrid', 'Bilbao', 'Malaga'
+FILE = 'cities.txt'
+
+with open(FILE, 'r') as read_file:  # if you have no file, you can manually write them in CITIES
+    CITIES = [city.replace('\n', '') for city in read_file.readlines()]
+    read_file.close()
+
+IN_ONE_FILE = False
 
 
 @dataclass
@@ -24,10 +30,17 @@ class BusinessList:
 
 
 def main():
-    writer = pd.ExcelWriter(f'{SEARCH_FOR.replace(" ", "_")}')
+    directory = ''
+
+    if IN_ONE_FILE:
+        writer = pd.ExcelWriter(f'{SEARCH_FOR.replace(" ", "_")}.xlsx')
+    else:
+        from pathlib import Path
+        directory = Path(f'{SEARCH_FOR.replace(" ", "_")}/')
+        directory.mkdir(exist_ok=True)
 
     for city in CITIES:
-        search = SEARCH_FOR + " in " + city
+        search = f'{SEARCH_FOR} in {city}'
         with sync_playwright() as pw:
             browser = pw.chromium.launch(headless=False)  # headless can be removed
             page = browser.new_page()
@@ -39,23 +52,23 @@ def main():
 
             page.locator('//input[@id="searchboxinput"]').fill(search)
 
-            page.keyboard.press("Enter")
+            page.keyboard.press('Enter')
             page.wait_for_timeout(2_000)
 
             page.hover('(//a[contains(@href, "https://www.google.com/maps/place")])[1]')
 
             while True:
-                page.mouse.wheel(0, 10000)
-                page.wait_for_timeout(5_000)
-
                 if page.locator('//span[@class="HlvSq"]').count() > 0:
                     listings = page.locator('//a[contains(@href, "https://www.google.com/maps/place")]').all()
                     break
 
+                page.mouse.wheel(0, 10000)
+                page.wait_for_timeout(5_000)
+
             business_list = BusinessList()
             for listing in listings:
                 listing.click()
-                page.wait_for_timeout(2_000)
+                page.wait_for_timeout(3_000)
 
                 name_xpath = '//h1[@class="DUwDvf lfPIob"]'
                 address_xpath = '//button[@data-item-id="address"]//div[contains(@class, "fontBodyMedium")]'
@@ -91,11 +104,15 @@ def main():
                 if business not in business_list.business_list:
                     business_list.business_list.append(business)
 
+            if not IN_ONE_FILE:
+                writer = directory / f'{city.replace(" ", "_")}.xlsx'
+
             business_list.dataframe().to_excel(writer, sheet_name=city, index=False)
 
             browser.close()
 
-    writer.close()
+    if IN_ONE_FILE:
+        writer.close()
 
 
 if __name__ == '__main__':
